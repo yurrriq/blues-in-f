@@ -14,7 +14,7 @@
 
 \paper {
   #(set-paper-size "arch a")
-  tagline = ##f
+  %% tagline = ##f
   #(define fonts
     (set-global-fonts
      #:music "improviso"
