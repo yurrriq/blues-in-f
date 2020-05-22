@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   pname = "blues-in-f";
   version = builtins.readFile ./VERSION;
-  src = ./.;
+  src = ./src;
 
   FONTCONFIG_FILE = makeFontsConf { fontDirectories = [ ]; };
 
