@@ -22,7 +22,7 @@ jobs:
         git -C out config user.name github-actions
         git -C out config user.email github-actions@users.noreply.github.com
     - name: Engrave
-      run: nix-build -o out
+      run: make prefix=out
     - name: GitHub Pages
       run: |
         git -C out add --all .
