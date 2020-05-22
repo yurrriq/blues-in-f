@@ -4,7 +4,7 @@ on:
     branches:
     - master
 jobs:
-  build:
+  engrave:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
         git clone --quiet --branch gh-pages --depth 1 https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git out
         git -C out config user.name github-actions
         git -C out config user.email github-actions@users.noreply.github.com
-    - name: Build
+    - name: Engrave
       run: nix-build -o out
     - name: GitHub Pages
       run: |
