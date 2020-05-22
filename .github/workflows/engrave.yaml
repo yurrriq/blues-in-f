@@ -1,0 +1,32 @@
+name: "Engrave score"
+on:
+  push:
+    branches:
+    - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v8
+    - name: Allow unfree
+      run: |
+        mkdir -p ~/.config/nixpkgs
+        echo '{ allowUnfree = true; }' >~/.config/nixpkgs/config.nix
+    - uses: cachix/cachix-action@v6
+      with:
+        name: yurrriq
+        skipPush: true
+    - run: |
+        git clone --quiet --branch gh-pages --depth 1 https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git site
+        git -C site config user.name github-actions
+        git -C site config user.email github-actions@users.noreply.github.com
+    - name: Build
+      run: nix-build -o site
+    - name: GitHub Pages
+      run: |
+        git -C site add --all .
+        git -C site commit -m 'Deploy to GitHub Pages'
+        git -C site push --quiet https://x-access-token:"$GITHUB_TOKEN"@github.com/"$GITHUB_REPOSITORY".git gh-pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
