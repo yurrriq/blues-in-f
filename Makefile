@@ -1,3 +1,4 @@
+prefix ?= out
 all:
-	install -dm755 out
-	nix-build --no-out-link | xargs -I% find % -type f | xargs install -m644 -t out
+	install -dm755 ${prefix}
+	nix-build --no-out-link | xargs -I% find % -type f | xargs install -m644 -t ${prefix}
